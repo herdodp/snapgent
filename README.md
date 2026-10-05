@@ -228,5 +228,3 @@ Contributions are welcome — especially new provider adapters.
 ## License
 
 Released under the [MIT License](LICENSE).
-
-Copyright (c) 2026 herdo dimas pratirto
