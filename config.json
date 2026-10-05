@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "vscode": {
+      "command": "vscode_mcp.exe",
+      "args": [],
+      "env": {
+        "VSCODE_WORKSPACE_PATH": "d:/project/snapgent"
+      }
+    }
+  }
+}

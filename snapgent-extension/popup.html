@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Snapgent</title>
+<style>
+  :root{
+    --y:#facc15;
+    --y-soft:rgba(250,204,21,.14);
+    --y-line:rgba(250,204,21,.42);
+    --bg:#08080a;
+    --panel:#101013;
+    --line:rgba(255,255,255,.07);
+    --txt:#ececef;
+    --dim:#82828c;
+  }
+  *{box-sizing:border-box}
+  body{
+    width:308px;margin:0;background:var(--bg);color:var(--txt);
+    font-family:"Space Grotesk",ui-sans-serif,-apple-system,"Segoe UI",Roboto,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .shell{padding:0 0 14px}
+
+  /* header */
+  .top{
+    display:flex;align-items:center;gap:9px;
+    padding:13px 15px 12px;border-bottom:1px solid var(--line);
+    background:linear-gradient(90deg,var(--y-soft),transparent 70%);
+  }
+  .mark{width:11px;height:11px;flex:none;background:var(--y);border-radius:2px;transform:rotate(45deg)}
+  .name{font-size:12.5px;font-weight:700;letter-spacing:2.4px;text-transform:uppercase}
+  .tag{margin-left:auto;font-size:9.5px;letter-spacing:1.1px;color:var(--dim);text-transform:uppercase}
+
+  /* status block */
+  .status{
+    margin:14px 15px 0;padding:13px 14px;position:relative;
+    background:var(--panel);border:1px solid var(--line);border-radius:4px;
+    overflow:hidden;
+  }
+  .status::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:#5b5b66;
+  }
+  .status[data-s="ok"]::before{background:var(--y)}
+  .status[data-s="warn"]::before{background:#f59e0b}
+  .status[data-s="off"]::before{background:#ef4444}
+  .word{font-size:16px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;line-height:1.1}
+  .status[data-s="ok"] .word{color:var(--y)}
+  .status[data-s="warn"] .word{color:#fbbf24}
+  .status[data-s="off"] .word{color:#f87171}
+  .sub{margin-top:5px;font-size:10.5px;letter-spacing:.4px;color:var(--dim)}
+
+  /* metrics */
+  .grid{display:flex;gap:8px;margin:10px 15px 0}
+  .cell{
+    flex:1;padding:9px 11px;background:var(--panel);
+    border:1px solid var(--line);border-radius:4px;
+  }
+  .k{font-size:8.5px;letter-spacing:1.3px;text-transform:uppercase;color:var(--dim)}
+  .v{margin-top:3px;font-size:15px;font-weight:700;letter-spacing:.6px}
+
+  /* server rows */
+  .srv{margin:10px 15px 0}
+  .srv-row{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:11px;color:#b9b9c2}
+  .sq{width:7px;height:7px;flex:none;background:#3a3a42}
+  .sq.on{background:var(--y)}
+  .srv-id{font-weight:600;letter-spacing:.2px;color:var(--txt)}
+  .srv-n{margin-left:auto;font-size:9.5px;color:var(--dim);letter-spacing:.5px}
+  .none{font-size:10.5px;color:var(--dim);letter-spacing:.3px}
+
+  /* actions */
+  .acts{margin:14px 15px 0;display:flex;flex-direction:column;gap:6px}
+  button{
+    width:100%;text-align:left;cursor:pointer;
+    padding:9px 12px;font-size:11.5px;font-weight:600;letter-spacing:1px;
+    text-transform:uppercase;font-family:inherit;
+    background:transparent;color:#c6c6cd;
+    border:1px solid var(--line);border-left:3px solid rgba(255,255,255,.14);
+    border-radius:3px;
+    transition:background .12s ease,color .12s ease,border-color .12s ease;
+  }
+  button:hover{background:var(--y-soft);color:var(--y);border-left-color:var(--y);border-color:var(--y-line)}
+  button.lead{background:var(--y);color:#0b0b0d;border-color:var(--y);border-left-color:#0b0b0d}
+  button.lead:hover{background:#fde047;color:#0b0b0d}
+  button[disabled]{opacity:.45;cursor:default}
+
+  /* footer */
+  .foot{
+    margin:13px 15px 0;padding-top:10px;border-top:1px solid var(--line);
+    font-size:9.5px;letter-spacing:.9px;text-transform:uppercase;color:#5f5f6a;
+    line-height:1.6;
+  }
+</style>
+</head>
+<body>
+  <div class="shell">
+    <div class="top">
+      <span class="mark"></span>
+      <span class="name">Snapgent</span>
+      <span class="tag" id="ver"></span>
+    </div>
+
+    <div class="status" id="status" data-s="off">
+      <div class="word" id="word">Bridge off</div>
+      <div class="sub" id="sub">start.bat not running</div>
+    </div>
+
+    <div class="grid">
+      <div class="cell"><div class="k">Tools</div><div class="v" id="tools">0</div></div>
+      <div class="cell"><div class="k">Servers</div><div class="v" id="srvCount">0</div></div>
+    </div>
+
+    <div class="srv" id="srvList"><div class="none">No data yet</div></div>
+
+    <div class="acts">
+      <button class="lead" id="openTarget">Open VS Code</button>
+      <button id="reconnect">Reconnect</button>
+      <button id="restart">Restart server</button>
+      <button id="settings">Settings</button>
+      <button id="kofi">Support</button>
+    </div>
+
+    <div class="foot" id="foot">Open a supported AI tab to begin</div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

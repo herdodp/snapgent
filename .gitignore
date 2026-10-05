@@ -3,3 +3,28 @@
 
 # Ada Library Information
 *.ali
+
+# Build artifacts
+mcp_build/
+mcp_out/
+*.spec
+
+# Binaries
+*.exe
+
+# Logs
+logs/
+*.log
+
+# Python
+__pycache__/
+*.pyc
+localpycs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+node_modules/
