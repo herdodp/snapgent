@@ -2,7 +2,7 @@
 
 > Turn any AI chat into an agent that drives your editor.
 
-Snapgent is a browser extension plus a small local bridge that lets a normal AI chat (DeepSeek, ChatGPT, GLM/Z.ai, and more) **read, edit, run, and inspect your project directly in VS Code** through the official MCP (Model Context Protocol) server. You describe what you want in plain language — the AI writes Snapgent commands into its reply, the extension executes them on your machine, and the result is fed straight back to the AI. No API key. No terminal. No copy-pasting code.
+Snapgent is a browser extension plus a small local bridge that lets a normal AI chat (DeepSeek, Z.ai, and Gemini) **read, edit, run, and inspect your project directly in VS Code** through the official MCP (Model Context Protocol) server. You describe what you want in plain language — the AI writes Snapgent commands into its reply, the extension executes them on your machine, and the result is fed straight back to the AI. No API key. No terminal. No copy-pasting code.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 ![Manifest V3](https://img.shields.io/badge/Chrome-Manifest%20V3-blue)
@@ -68,13 +68,10 @@ Because commands are just text in the AI's reply, they work on any chat site Sna
 | Provider | URL | Status | Notes |
 |---|---|---|---|
 | **DeepSeek** | `chat.deepseek.com` | ✅ Recommended | Most stable, best tool adherence |
-| **ChatGPT** | `chatgpt.com` | ✅ Supported | Image/vision disabled on purpose; context re-stated via "Reminder" |
-| **GLM / Z.ai** | `chat.z.ai` | ✅ Supported | Svelte DOM, code-block wrapper masking |
-| **Gemini** | `gemini.google.com` | ⚠️ Provider present | Can stop using tools in long sessions |
-| **Kimi** | `www.kimi.com` | ⚠️ Provider present | May reach for its own native tools |
-| **Arena** | `arena.ai` | ⚠️ Provider present | Use **Direct** mode only |
+| **Z.ai (GLM)** | `chat.z.ai` | ✅ Supported | Svelte DOM, code-block wrapper masking |
+| **Gemini** | `gemini.google.com` | ✅ Supported | Angular DOM, Quill composer; can stop using tools in long sessions |
 
-> Provider files for Gemini, Kimi and Arena exist in `snapgent-extension/providers/`. Which sites the extension activates on is controlled by `manifest.json` and `PROVIDER_URLS` in `background.js`.
+> Which sites the extension activates on is controlled by `manifest.json` (`content_scripts` + `host_permissions`) and `PROVIDER_URLS` in `background.js`.
 
 ---
 
@@ -130,8 +127,7 @@ The AI will emit commands, Snapgent executes them, and you watch the results app
 **Tips**
 
 - Keep the bridge window open while you work — closing it stops the connection.
-- On **ChatGPT**, start fresh chats for long tasks; Snapgent periodically re-states its instructions to counter context summarisation.
-- On **Arena**, keep the mode dropdown on **Direct**.
+- On **Gemini**, start fresh chats for long tasks; it can stop using tools in long sessions.
 
 ---
 
@@ -145,16 +141,9 @@ core/parser.js        Snapgent command parsing — pure string logic      (globa
 core/main.js          agentic loop, UI, camouflage, session state        (uses ZSProvider)
 providers/deepseek.js DeepSeek-specific: DOM selectors, generation
                       detection, send mechanics, composer modes         (global ZSProvider)
-providers/chatgpt.js  ChatGPT-specific: React DOM, ProseMirror composer,
-                      CodeMirror reply reading                         (global ZSProvider)
-providers/chatgpt-cm.js MAIN-world CodeMirror tap: republishes each code
-                      block's true document (rendered DOM truncates
-                      long lines)                                      (injected by manifest)
-providers/glm.js      GLM / Z.ai: Svelte DOM, code-block wrapper masking (global ZSProvider)
-providers/gemini.js   Google Gemini: Angular DOM, Quill composer       (global ZSProvider)
-providers/kimi.js     Kimi / Moonshot: Vue DOM, Lexical composer       (global ZSProvider)
-providers/arena.js    Arena: React DOM, multi-model playground,
-                      A/B auto-commit, Direct-mode gate               (global ZSProvider)
+providers/glm.js      Z.ai / GLM: Svelte DOM, code-block wrapper masking (global ZSProvider)
+providers/gemini.js   Google Gemini: Angular DOM, Quill composer,
+                      code-block masking                               (global ZSProvider)
 background.js         WebSocket to the local bridge (provider-agnostic)
 ```
 
@@ -222,7 +211,6 @@ Both print `PASS`/`FAIL` per case and exit non-zero on failure.
 | "No VS Code instance connected" | MCP server disabled | Enable it: assistant → … → Manage MCP Servers |
 | "Extension was reloaded" | Tab running a stale extension version | Reload the page (F5) |
 | Commands never run | Wrong site or address | Use an exact supported URL, open a new chat |
-| Nothing happens on Arena | Wrong mode | Set the mode dropdown to **Direct** |
 
 ---
 
