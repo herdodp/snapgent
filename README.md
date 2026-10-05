@@ -6,7 +6,7 @@ Snapgent is a browser extension plus a small local bridge that lets a normal AI 
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 ![Manifest V3](https://img.shields.io/badge/Chrome-Manifest%20V3-blue)
-![Version](https://img.shields.io/badge/version-1.5.5-green)
+![Version](https://img.shields.io/badge/version-1.0-green)
 
 ---
 
