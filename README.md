@@ -1,48 +1,49 @@
-# Snapgent
+<div align="center">
 
-> Turn any AI chat into an agent that drives your editor.
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:000000,100:FACC15&height=200&section=header&text=Snapgent&fontSize=64&fontColor=FACC15&fontAlignY=40&desc=Turn%20any%20AI%20chat%20into%20an%20agent%20that%20drives%20VS%20Code&descAlignY=62&descSize=16&descColor=FFE066" width="100%" />
 
-Snapgent is a browser extension plus a small local bridge that lets a normal AI chat (DeepSeek, Z.ai, and Gemini) **read, edit, run, and inspect your project directly in VS Code** through the official MCP (Model Context Protocol) server. You describe what you want in plain language — the AI writes Snapgent commands into its reply, the extension executes them on your machine, and the result is fed straight back to the AI. No API key. No terminal. No copy-pasting code.
+[![License: MIT](https://img.shields.io/badge/License-MIT-FACC15?style=for-the-badge&logoColor=000000&labelColor=000000)](LICENSE)
+[![Manifest V3](https://img.shields.io/badge/Chrome-Manifest%20V3-FACC15?style=for-the-badge&logo=googlechrome&logoColor=000000&labelColor=000000)](https://developer.chrome.com/docs/extensions/mv3/)
+[![Version](https://img.shields.io/badge/version-1.0-FACC15?style=for-the-badge&logoColor=000000&labelColor=000000)](../../releases)
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-![Manifest V3](https://img.shields.io/badge/Chrome-Manifest%20V3-blue)
-![Version](https://img.shields.io/badge/version-1.0-green)
+</div>
 
----
-
-## Table of contents
-
-- [What it does](#what-it-does)
-- [How it works](#how-it-works)
-- [Supported AI providers](#supported-ai-providers)
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Architecture](#architecture)
-- [Project structure](#project-structure)
-- [Development](#development)
-- [Troubleshooting](#troubleshooting)
-- [Contributing](#contributing)
-- [License](#license)
+> **Snapgent** is a browser extension plus a small local bridge that lets a normal AI chat (DeepSeek, Z.ai, and Gemini) **read, edit, run, and inspect your project directly in VS Code** through the official MCP (Model Context Protocol) server. You describe what you want in plain language — the AI writes Snapgent commands into its reply, the extension executes them on your machine, and the result is fed straight back to the AI.
+>
+> **No API key. No terminal. No copy-pasting code.**
 
 ---
 
-## What it does
+## 📑 Table of contents
+
+- [What it does](#-what-it-does)
+- [How it works](#-how-it-works)
+- [Supported AI providers](#-supported-ai-providers)
+- [Requirements](#-requirements)
+- [Installation](#-installation)
+- [Usage](#-usage)
+- [Architecture](#-architecture)
+- [Project structure](#-project-structure)
+- [Development](#-development)
+- [Troubleshooting](#-troubleshooting)
+- [Contributing](#-contributing)
+- [License](#-license)
+
+---
+
+## ✨ What it does
 
 Snapgent gives a web-based AI chat real hands inside your editor. With it, the AI can:
 
-- **Read and edit files** in your workspace (create, modify, move, delete).
-- **Run shell commands** inside the workspace folder.
-- **Execute code** (e.g. Luau) and read the returned result.
-- **Inspect and search** your project — game tree, scripts, instances, console output.
-- **Generate assets and models** when a connected server supports it.
-- **Talk to other MCP servers** alongside VS Code, not just the editor itself.
+- 📖 **Read and edit files** in your workspace (create, modify, move, delete).
+- ⚡ **Run shell commands** inside the workspace folder.
+- 🔍 **Search and inspect** your project — files, folders, sizes, checksums and more.
 
 Everything happens through the connected MCP server. You never leave the chat window, and you never touch a terminal.
 
 ---
 
-## How it works
+## ⚙️ How it works
 
 Snapgent has three parts that talk to each other over a local WebSocket:
 
@@ -63,7 +64,7 @@ Because commands are just text in the AI's reply, they work on any chat site Sna
 
 ---
 
-## Supported AI providers
+## 🤖 Supported AI providers
 
 | Provider | URL | Status | Notes |
 |---|---|---|---|
@@ -75,16 +76,16 @@ Because commands are just text in the AI's reply, they work on any chat site Sna
 
 ---
 
-## Requirements
+## 🧩 Requirements
 
 - **Google Chrome** or **Microsoft Edge** (Manifest V3).
 - **VS Code** (or a compatible editor exposing an MCP server).
-- **Windows** or **macOS** for the bridge.
+- **Windows**, **macOS**, or **Linux** for the bridge.
 - The MCP server enabled in your editor (first time only — see below).
 
 ---
 
-## Installation
+## 🚀 Installation
 
 ### 1. Load the extension
 
@@ -96,12 +97,12 @@ Because commands are just text in the AI's reply, they work on any chat site Sna
 
 ### 2. Set up the bridge
 
-1. Grab the bridge (`bridge.exe`, `start.bat`, `MacOS_Start.command`) from this repo or the releases page.
-2. Open VS Code and load a project/place.
-3. **Enable the MCP server** (first time only): click the AI assistant button in the top bar, then **… → Manage MCP Servers → Enable as MCP Server**.
-4. **Run the bridge**:
+1. Grab the bridge (`bridge.exe` / `bridge.py`, `vscode_mcp.exe` / `vscode_mcp.py`, `start.bat`, `start.sh`) from this repo or the releases page.
+2. Open VS Code and open the folder you want the AI to work in.
+3. **Run the bridge**:
    - **Windows** — double-click `start.bat`.
-   - **macOS** — run `MacOS_Start.command`.
+   - **macOS / Linux** — run `./start.sh`.
+
    A small window opens and stays open while the bridge is running.
    > On macOS the first launch shows a Gatekeeper warning (normal for downloaded scripts): click **Done**, then **System Settings → Privacy & Security**, scroll down and click **Open Anyway**.
 
@@ -114,7 +115,7 @@ Because commands are just text in the AI's reply, they work on any chat site Sna
 
 ---
 
-## Usage
+## 💬 Usage
 
 Once a session is running, just talk to the AI normally:
 
@@ -131,7 +132,7 @@ The AI will emit commands, Snapgent executes them, and you watch the results app
 
 ---
 
-## Architecture
+## 🏗️ Architecture
 
 The extension is split into a **provider-agnostic core** and **per-site providers**. The core never touches a host site's DOM directly — it only talks to the `ZSProvider` interface.
 
@@ -157,7 +158,7 @@ No core changes required:
 
 ---
 
-## Project structure
+## 📂 Project structure
 
 ```
 snapgent-rilis/
@@ -175,14 +176,16 @@ snapgent-rilis/
 ├── assets/                    # Icons and images
 ├── config.json                # MCP server config (bridge)
 ├── start.bat                  # Windows bridge launcher
-├── MacOS_Start.command        # macOS bridge launcher
-├── bridge.exe                 # Local bridge (Windows)
-└── vscode_mcp.exe             # MCP server binary
+├── start.sh                   # macOS / Linux bridge launcher
+├── bridge.py                  # Local bridge (cross-platform)
+├── bridge.exe                 # Local bridge (Windows, prebuilt)
+├── vscode_mcp.py              # VS Code MCP server (cross-platform)
+└── vscode_mcp.exe             # VS Code MCP server binary (Windows)
 ```
 
 ---
 
-## Development
+## 🛠️ Development
 
 ### Smoke tests
 
@@ -198,23 +201,23 @@ Both print `PASS`/`FAIL` per case and exit non-zero on failure.
 ### Notes
 
 - `core/main.js` only calls the `ZSProvider` interface — keep DOM logic inside providers.
-- Commands are detected as **plain text** in the AI reply, so formatting rules matter (one command per reply, inside a fenced code block; `###LUA###` blocks for code).
+- Commands are detected as **plain text** in the AI reply, so formatting rules matter (one command per reply, inside a fenced code block).
 - The bridge listens on local port **17613**. `start.bat` frees the port from any previous instance before launching.
 
 ---
 
-## Troubleshooting
+## 🩺 Troubleshooting
 
 | Symptom | Likely cause | Fix |
 |---|---|---|
-| "Bridge offline" error | Bridge not running, or VS Code closed | Start `start.bat` / `MacOS_Start.command`; ensure VS Code is open |
+| "Bridge offline" error | Bridge not running, or VS Code closed | Start `start.bat` (Windows) or `./start.sh` (macOS/Linux); ensure VS Code is open |
 | "No VS Code instance connected" | MCP server disabled | Enable it: assistant → … → Manage MCP Servers |
 | "Extension was reloaded" | Tab running a stale extension version | Reload the page (F5) |
 | Commands never run | Wrong site or address | Use an exact supported URL, open a new chat |
 
 ---
 
-## Contributing
+## 🤝 Contributing
 
 Contributions are welcome — especially new provider adapters.
 
@@ -225,6 +228,12 @@ Contributions are welcome — especially new provider adapters.
 
 ---
 
-## License
+## 📄 License
 
 Released under the [MIT License](LICENSE).
+
+<div align="center">
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:FACC15,100:000000&height=120&section=footer" width="100%" />
+
+</div>
