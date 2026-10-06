@@ -1,51 +1,62 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:000000,100:FACC15&height=200&section=header&text=Snapgent&fontSize=64&fontColor=FACC15&fontAlignY=40&desc=Turn%20any%20AI%20chat%20into%20an%20agent%20that%20drives%20VS%20Code&descAlignY=62&descSize=16&descColor=FFE066" width="100%" />
+<a href="https://github.com/herdodp/snapgent">
+<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=800&size=52&duration=3000&pause=1000&color=FACC15&center=true&vCenter=true&width=600&height=90&lines=Snapgent;%3E+AI+agent+for+VS+Code" alt="Snapgent" />
+</a>
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-FACC15?style=for-the-badge&logoColor=000000&labelColor=000000)](LICENSE)
-[![Manifest V3](https://img.shields.io/badge/Chrome-Manifest%20V3-FACC15?style=for-the-badge&logo=googlechrome&logoColor=000000&labelColor=000000)](https://developer.chrome.com/docs/extensions/mv3/)
-[![Version](https://img.shields.io/badge/version-1.0-FACC15?style=for-the-badge&logoColor=000000&labelColor=000000)](../../releases)
+<p><b>Turn any AI chat into an agent that drives your editor.</b></p>
+
+[![License](https://img.shields.io/badge/LICENSE-MIT-FACC15?style=flat-square&labelColor=111111&logo=opensourceinitiative&logoColor=FACC15)](LICENSE)
+[![Manifest](https://img.shields.io/badge/MANIFEST-V3-FACC15?style=flat-square&labelColor=111111&logo=googlechrome&logoColor=FACC15)](https://developer.chrome.com/docs/extensions/mv3/)
+[![Version](https://img.shields.io/badge/VERSION-1.0-FACC15?style=flat-square&labelColor=111111&logo=semanticrelease&logoColor=FACC15)](../../releases)
+[![MCP](https://img.shields.io/badge/PROTOCOL-MCP-FACC15?style=flat-square&labelColor=111111&logo=modelcontextprotocol&logoColor=FACC15)](#)
 
 </div>
 
-> **Snapgent** is a browser extension plus a small local bridge that lets a normal AI chat (DeepSeek, Z.ai, and Gemini) **read, edit, run, and inspect your project directly in VS Code** through the official MCP (Model Context Protocol) server. You describe what you want in plain language — the AI writes Snapgent commands into its reply, the extension executes them on your machine, and the result is fed straight back to the AI.
->
-> **No API key. No terminal. No copy-pasting code.**
+```console
+herdo@snapgent:~$ npm run snapgent
+
+  ███████╗███╗   ██╗ █████╗ ██████╗  ██████╗ ███████╗███╗   ██╗████████╗
+  ██╔════╝████╗  ██║██╔══██╗██╔══██╗██╔════╝ ██╔════╝████╗  ██║╚══██╔══╝
+  ███████╗██╔██╗ ██║███████║██████╔╝██║  ███╗█████╗  ██╔██╗ ██║   ██║
+  ╚════██║██║╚██╗██║██╔══██║██╔═══╝ ██║   ██║██╔══╝  ██║╚██╗██║   ██║
+  ███████║██║ ╚████║██║  ██║██║     ╚██████╔╝███████╗██║ ╚████║   ██║
+  ╚══════╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝      ╚═════╝ ╚══════╝╚═╝  ╚═══╝   ╚═╝
+
+  > browser extension + local bridge for VS Code
+  > no API key · no terminal · no copy-paste
+```
+
+Snapgent is a browser extension plus a small local bridge that lets a normal AI chat (DeepSeek, Z.ai, and Gemini) **read, edit, run, and inspect your project directly in VS Code** through the official MCP (Model Context Protocol) server. You describe what you want in plain language — the AI writes Snapgent commands into its reply, the extension executes them on your machine, and the result is fed straight back to the AI.
 
 ---
 
-## 📑 Table of contents
+<table>
+<tr>
+<td width="33%" valign="top">
 
-- [What it does](#-what-it-does)
-- [How it works](#-how-it-works)
-- [Supported AI providers](#-supported-ai-providers)
-- [Requirements](#-requirements)
-- [Installation](#-installation)
-- [Usage](#-usage)
-- [Architecture](#-architecture)
-- [Project structure](#-project-structure)
-- [Development](#-development)
-- [Troubleshooting](#-troubleshooting)
-- [Contributing](#-contributing)
-- [License](#-license)
+### 📖 Read & Edit
+Create, modify, move and delete files in your workspace — all from the chat.
 
----
+</td>
+<td width="33%" valign="top">
 
-## ✨ What it does
+### ⚡ Run
+Run shell commands inside the workspace folder without touching a terminal.
 
-Snapgent gives a web-based AI chat real hands inside your editor. With it, the AI can:
+</td>
+<td width="33%" valign="top">
 
-- 📖 **Read and edit files** in your workspace (create, modify, move, delete).
-- ⚡ **Run shell commands** inside the workspace folder.
-- 🔍 **Search and inspect** your project — files, folders, sizes, checksums and more.
+### 🔍 Inspect
+Search files, folders, sizes, checksums and more — everything your project needs.
 
-Everything happens through the connected MCP server. You never leave the chat window, and you never touch a terminal.
+</td>
+</tr>
+</table>
 
 ---
 
-## ⚙️ How it works
-
-Snapgent has three parts that talk to each other over a local WebSocket:
+## `01` &nbsp; How it works
 
 ```
 ┌─────────────┐     plain-text      ┌──────────────────┐    WebSocket    ┌────────────┐    MCP    ┌───────────┐
@@ -64,7 +75,7 @@ Because commands are just text in the AI's reply, they work on any chat site Sna
 
 ---
 
-## 🤖 Supported AI providers
+## `02` &nbsp; Supported AI providers
 
 | Provider | URL | Status | Notes |
 |---|---|---|---|
@@ -76,7 +87,7 @@ Because commands are just text in the AI's reply, they work on any chat site Sna
 
 ---
 
-## 🧩 Requirements
+## `03` &nbsp; Requirements
 
 - **Google Chrome** or **Microsoft Edge** (Manifest V3).
 - **VS Code** (or a compatible editor exposing an MCP server).
@@ -85,28 +96,28 @@ Because commands are just text in the AI's reply, they work on any chat site Sna
 
 ---
 
-## 🚀 Installation
+## `04` &nbsp; Installation
 
-### 1. Load the extension
+**① Load the extension**
 
 1. Open `edge://extensions` (Edge) or `chrome://extensions` (Chrome).
-2. Enable **Developer mode** (toggle in the top-right corner).
+2. Enable **Developer mode** (top-right toggle).
 3. Click **Load unpacked**.
 4. Select the `snapgent-extension` folder.
 5. The Snapgent icon appears in your toolbar — the extension is active.
 
-### 2. Set up the bridge
+**② Set up the bridge**
 
 1. Grab the bridge (`bridge.exe` / `bridge.py`, `vscode_mcp.exe` / `vscode_mcp.py`, `start.bat`, `start.sh`) from this repo or the releases page.
 2. Open VS Code and open the folder you want the AI to work in.
-3. **Run the bridge**:
+3. Run the bridge:
    - **Windows** — double-click `start.bat`.
    - **macOS / Linux** — run `./start.sh`.
 
-   A small window opens and stays open while the bridge is running.
+   A small window opens and stays open while the bridge runs.
    > On macOS the first launch shows a Gatekeeper warning (normal for downloaded scripts): click **Done**, then **System Settings → Privacy & Security**, scroll down and click **Open Anyway**.
 
-### 3. Start a session
+**③ Start a session**
 
 1. Go to a supported chat site (e.g. `https://chat.deepseek.com`).
 2. Open a new chat — Snapgent only activates on the exact supported addresses.
@@ -115,7 +126,7 @@ Because commands are just text in the AI's reply, they work on any chat site Sna
 
 ---
 
-## 💬 Usage
+## `05` &nbsp; Usage
 
 Once a session is running, just talk to the AI normally:
 
@@ -123,7 +134,7 @@ Once a session is running, just talk to the AI normally:
 
 > "Run the test suite and fix anything that fails."
 
-The AI will emit commands, Snapgent executes them, and you watch the results appear in the chat. You can step in at any time with a new instruction.
+The AI emits commands, Snapgent executes them, and you watch results appear in the chat. You can step in at any time with a new instruction.
 
 **Tips**
 
@@ -132,7 +143,7 @@ The AI will emit commands, Snapgent executes them, and you watch the results app
 
 ---
 
-## 🏗️ Architecture
+## `06` &nbsp; Architecture
 
 The extension is split into a **provider-agnostic core** and **per-site providers**. The core never touches a host site's DOM directly — it only talks to the `ZSProvider` interface.
 
@@ -148,9 +159,7 @@ providers/gemini.js   Google Gemini: Angular DOM, Quill composer,
 background.js         WebSocket to the local bridge (provider-agnostic)
 ```
 
-### Adding a new provider
-
-No core changes required:
+**Adding a new provider** — no core changes required:
 
 1. Write `providers/<site>.js` exporting the same `ZSProvider` interface.
 2. Add the site's URL pattern to `manifest.json` (`content_scripts` + `host_permissions`).
@@ -158,7 +167,7 @@ No core changes required:
 
 ---
 
-## 📂 Project structure
+## `07` &nbsp; Project structure
 
 ```
 snapgent-rilis/
@@ -185,9 +194,7 @@ snapgent-rilis/
 
 ---
 
-## 🛠️ Development
-
-### Smoke tests
+## `08` &nbsp; Development
 
 Plain Node, no dependencies. Run from `snapgent-extension/`:
 
@@ -198,7 +205,7 @@ node test-chatgpt.js    # ChatGPT reply reading (providers/chatgpt.js)
 
 Both print `PASS`/`FAIL` per case and exit non-zero on failure.
 
-### Notes
+**Notes**
 
 - `core/main.js` only calls the `ZSProvider` interface — keep DOM logic inside providers.
 - Commands are detected as **plain text** in the AI reply, so formatting rules matter (one command per reply, inside a fenced code block).
@@ -206,7 +213,7 @@ Both print `PASS`/`FAIL` per case and exit non-zero on failure.
 
 ---
 
-## 🩺 Troubleshooting
+## `09` &nbsp; Troubleshooting
 
 | Symptom | Likely cause | Fix |
 |---|---|---|
@@ -217,7 +224,7 @@ Both print `PASS`/`FAIL` per case and exit non-zero on failure.
 
 ---
 
-## 🤝 Contributing
+## `10` &nbsp; Contributing
 
 Contributions are welcome — especially new provider adapters.
 
@@ -228,12 +235,10 @@ Contributions are welcome — especially new provider adapters.
 
 ---
 
-## 📄 License
-
-Released under the [MIT License](LICENSE).
-
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:FACC15,100:000000&height=120&section=footer" width="100%" />
+**[ MIT License ](LICENSE)** &nbsp;·&nbsp; built with 🖤 and 💛
+
+<sub>Snapgent — turn any AI chat into an agent that drives your editor.</sub>
 
 </div>
